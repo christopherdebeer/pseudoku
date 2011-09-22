@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SudoQ Prototype</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/jquery/jquery-color/master/jquery.color.js"></script>
+	<style type="text/css">
+		#wrapper {
+			width: 370px;
+			margin: 100px auto;
+			oveflow: hidden;
+		}
+		#board {
+			border: 2px solid #000;
+			border-right: 0 none;
+			border-bottom: 0 none;
+		}
+		#board td {
+			border-right: 1px solid #A0A0A0;
+			height: 40px;
+			width: 40px;
+			text-align: center;
+			cursor: pointer;
+		}
+		#board tr {
+			border-bottom: 1px solid #A0A0A0;
+			display: block;
+		}
+		#board td:nth-child(3n) {
+			border-right: 2px solid #000;
+		}
+		#board tr:nth-child(3n) {
+			border-bottom: 2px solid #000;
+		}
+		#board td.selected {
+			background-color: #ccc;
+			color:#fff;
+		}
+		#numPad {
+			display: none;
+			padding:15px 0;
+		}
+		#numPad a {
+			color: #fff;
+			padding: 10px;
+			background: #000;
+			display: block;
+			float: left;
+			margin-right :5px;
+			text-decoration: none;
+		}
+	</style>
+	<script type="text/javascript">
+
+		(function($){
+			$(document).ready(function () {
+
+
+				var updateSq= function (options) {
+					if (isValid(options)){
+						var selector = "td[data-x=" + options.x + "][data-y=" + options.y + "]";
+						// console.log(options,selector);
+						$(selector)
+							.text(options.value)
+							.removeClass("selected")
+							.addClass("done");
+						$("#numPad").hide();
+
+					} else {
+						console.log("Not a valid move", options);
+						var selector = "td[data-x=" + options.x + "][data-y=" + options.y + "]";
+						// console.log(options,selector);
+						$(selector)
+							.removeClass("selected")
+							.css("background-color", "#ff0000")
+							.animate({
+							      backgroundColor: "none"
+							}, 1500 );
+						$("#numPad").hide();
+					}
+				}
+
+				var isValid = function (options) {
+
+					// check row
+					if ($("td[data-x=" + options.x + "]:contains('" + options.value + "')").length > 0) return false;
+					// check column	
+					if ($("td[data-y=" + options.y + "]:contains('" + options.value + "')").length > 0) return false;
+					// check local square
+					if (options.x < 3) {
+						if (y < 3) {
+							// master block A
+						} else if (y < 6) {
+							// master block B
+						} else {
+							// master block C
+						}
+					} else if (options.x < 6) {
+						if (y < 3) {
+							// master block D
+						} else if (y < 6) {
+							// master block E
+						} else {
+							// master block F
+						}
+					} else {
+						if (y < 3) {
+							// master block G
+						} else if (y < 6) {
+							// master block H
+						} else {
+							// master block I
+						}
+					}
+
+					return true;
+				}
+
+				// setup board
+				for (var x = 0; x < 9; x++) {
+					$("#board").append("<tr id='row" + x.toString() +"'/>");
+					for (var y = 0; y < 9; y++) {
+						$("#row" + x.toString()).append("<td data-x='" + x.toString() + "' data-y='" + y.toString() + "' ></td>")
+					}
+				}
+
+				// square click events
+				$("#board td").click(function(e) {
+					if (!$(this).hasClass("done") && !$(this).hasClass("busy")) {
+						$("#board td").removeClass("selected");
+						$("#numPad").show();
+						$(this).attr("style","")
+							.addClass("selected");
+					}
+				});
+
+
+				// numPad click events
+				$("#numPad a").click(function(e) {
+					if ($(this).text() == "Cancel") {
+						e.preventDefault();
+						$("#numPad").hide();
+						$("#board td").removeClass("selected");
+					} else {
+						e.preventDefault();
+						var thisX = $("td.selected").attr("data-x");
+						var thisY = $("td.selected").attr("data-y");
+						var newValue = $(this).text();
+						//$("td.selected").text($(this).text()).addClass("done");
+						updateSq({
+							x: thisX,
+							y: thisY,
+							value: newValue 
+						});
+					}
+				});
+
+			});
+		})(jQuery);
+	</script>
+
+	<script type="text/javascript">
+
+	// https://gist.github.com/1230481
+	// Sudoku Solver for 140byt.es
+	// by Mathieu 'p01' Henri (https://github.com/p01)
+		
+	var testGrid = [0,0,0,1,5,0,0,7,0,1,0,6,0,0,0,8,2,0,3,0,0,8,6,0,0,4,0,9,0,0,4,0,0,5,6,7,0,0,4,7,0,8,3,0,0,7,3,2,0,0,6,0,0,4,0,4,0,0,8,1,0,0,9,0,1,7,0,0,0,2,0,8,0,5,0,0,3,7,0,0,0];
+  	var myFunction = function R(a,f,i,j,m,g){for(i=80;a[i];i--||f());for(m=10;g=a[i]=--m;g&&R(a,f))for(j in a)g*=a[j^i==j]^m||i/9^j/9&&i%9^j%9&&i/27^j/27|i%9/3^j%9/3}
+  	myFunction( testGrid, (function(a){ 
+	  	return function(){ console.log("Sudoku Solver done.", a);} // document.getElementById( "ret" ).textContent=a;
+	})(testGrid) );
+
+	</script>
+</head>
+<body>
+	
+	<div id="wrapper">
+	<h1>pseudoku Prototype I</h1>
+		<table id="board" cellpadding="0" cellspacing="0" border="0">
+		</table>
+		<div id="numPad">
+			<a href="#" class="button">1</a>
+			<a href="#" class="button">2</a>
+			<a href="#" class="button">3</a>
+			<a href="#" class="button">4</a>
+			<a href="#" class="button">5</a>
+			<a href="#" class="button">6</a>
+			<a href="#" class="button">7</a>
+			<a href="#" class="button">8</a>
+			<a href="#" class="button">9</a>
+			<a href="#" class="button">Cancel</a>
+		</div>
+	</div>
+</body>
+</html>
