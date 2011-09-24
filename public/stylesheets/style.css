@@ -1,8 +1,44 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
+#wrapper {
+			width: 370px;
+			margin: 100px auto;
+			oveflow: hidden;
+		}
+		#board {
+			border: 2px solid #000;
+			border-right: 0 none;
+			border-bottom: 0 none;
+		}
+		#board td {
+			border-right: 1px solid #A0A0A0;
+			height: 40px;
+			width: 40px;
+			text-align: center;
+			cursor: pointer;
+		}
+		#board tr {
+			border-bottom: 1px solid #A0A0A0;
+			display: block;
+		}
+		#board td:nth-child(3n) {
+			border-right: 2px solid #000;
+		}
+		#board tr:nth-child(3n) {
+			border-bottom: 2px solid #000;
+		}
+		#board td.selected {
+			background-color: #ccc;
+			color:#fff;
+		}
+		#numPad {
+			display: none;
+			padding:15px 0;
+		}
+		#numPad a {
+			color: #fff;
+			padding: 10px;
+			background: #000;
+			display: block;
+			float: left;
+			margin-right :5px;
+			text-decoration: none;
+		}
