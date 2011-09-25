@@ -8,7 +8,7 @@ var nowjs = require("now");
 var app = module.exports = express.createServer();
 var everyone = nowjs.initialize(app);
 
-everyone.now.board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var blankBoard = everyone.now.board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 everyone.now.users = {};
 
@@ -28,7 +28,7 @@ everyone.now.makeMove = function (userId, options) {
 }
 
 everyone.now.resetBoard = function (userId) {
-  everyone.now.board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  everyone.now.board = blankBoard;
   everyone.now.populateBoard(everyone.now.board);
   console.log("Board Reset by: ", everyone.now.users[userId]);
 }
