@@ -1,8 +1,26 @@
+
+
+
 (function($){
 			$(document).ready(function () {
 
 
-				var updateSq= function (options) {
+				now.blockSq = function (options) {
+					console.log("Reciveing busy req from server...");
+					$("#board td[data-x='" + options.x.toString() + "'][data-y='" + options.y.toString() + "']")
+						.addClass("busy");
+				}
+
+				now.recieveMove = function (options) {
+					console.log("Recieving move from server....");
+					updateSq({
+						x: options.x,
+						y: options.y,
+						value: options.value
+					});
+				}
+
+				var updateSq = function (options) {
 					if (isValid(options)){
 						var selector = "td[data-x=" + options.x + "][data-y=" + options.y + "]";
 						// console.log(options,selector);
@@ -79,9 +97,13 @@
 				$("#board td").click(function(e) {
 					if (!$(this).hasClass("done") && !$(this).hasClass("busy")) {
 						$("#board td").removeClass("selected");
+						now.reserveSq({
+							x: $(this).attr("data-x"),
+							y: $(this).attr("data-y")
+						});
+						$(this).addClass("selected")
+							.attr("style","")
 						$("#numPad").show();
-						$(this).attr("style","")
-							.addClass("selected");
 					}
 				});
 
@@ -97,10 +119,15 @@
 						var thisX = $("td.selected").attr("data-x");
 						var thisY = $("td.selected").attr("data-y");
 						var newValue = $(this).text();
-						updateSq({
+						// updateSq({
+						// 	x: thisX,
+						// 	y: thisY,
+						// 	value: newValue 
+						// });
+						now.makeMove({
 							x: thisX,
 							y: thisY,
-							value: newValue 
+							value: newValue
 						});
 					}
 				});
