@@ -29,9 +29,7 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-  res.render('index', {
-    title: 'Express'
-  });
+  res.render('index', {});
 });
 
 app.listen(3000);
