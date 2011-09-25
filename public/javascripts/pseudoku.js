@@ -39,7 +39,7 @@
 							.text(options.value)
 							.removeClass("selected")
 							.addClass("done");
-						$("#numPad").hide();
+						//$("#numPad").hide();
 
 					} else {
 						console.log("Not a valid move", options);
@@ -51,7 +51,7 @@
 							.animate({
 							      backgroundColor: "none"
 							}, 1500 );
-						$("#numPad").hide();
+						//$("#numPad").hide();
 					}
 				}
 
@@ -148,6 +148,7 @@
 								y: thisY,
 								value: newValue
 							});
+							$("#numPad").hide();
 						}
 					});
 
