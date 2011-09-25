@@ -29,6 +29,10 @@
 			background-color: #ccc;
 			color:#fff;
 		}
+		#board td.busy {
+			background-color: #346;
+			color:#fff;
+		}
 		#numPad {
 			display: none;
 			padding:15px 0;
